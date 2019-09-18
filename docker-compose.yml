@@ -1,0 +1,26 @@
+version: '2'
+services:
+  nginx:
+    build: nginx
+    container_name: nginx
+    networks:
+      - confluence_network
+      - default
+    external_links:
+      - confluence-fgh
+    environment:
+      - MY_DOMAIN_NAME=wiki.fgh.org.mz
+    mem_limit: 2g
+    cpu_shares: 256
+    # restart: always
+    ports: 
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/etc/letsencrypt:/etc/letsencrypt"
+      - "/var/lib/letsencrypt:/var/lib/letsencrypt"
+
+networks:
+ confluence_network:
+  external:
+   name: confluence_default
